@@ -6,7 +6,16 @@ using System.Threading.Tasks;
 
 namespace Application.Models
 {
-    internal class SlideResponse
+    public class SlideResponse
     {
+        public int IdSlide { get; set; }
+        public int IdPresentation { get; set; }
+        public string Title { get; set; }
+        public DateTime CreateAt { get; set; }
+        public DateTime ModifiedAt { get; set; }
+        public int Position { get; set; }
+        public string BackgroundColor { get; set; }
+        public int IdAsk { get; set; }
+        public int IdContentType { get; set; }
     }
 }

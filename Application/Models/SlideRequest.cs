@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace Application.Models
 {
-    internal class SlideRequest
+    public class SlideRequest
     {
+        public int IdPresentation { get; set; }
+        public string Title { get; set; }
+        public int Position { get; set; }
+        public string BackgroundColor { get; set; }
+        public int IdAsk { get; set; }
+        public int IdContentType { get; set; }
     }
 }

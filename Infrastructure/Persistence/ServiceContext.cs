@@ -62,7 +62,7 @@ namespace Infrastructure.Persistence
                 entity.HasOne(e => e.Presentation)
                     .WithMany(e => e.Slides)
                     .HasForeignKey(e => e.IdPresentation)
-                    .OnDelete(DeleteBehavior.Cascade);
+                    .OnDelete(DeleteBehavior.ClientSetNull);
                 entity.HasOne(e => e.ContentType)
                     .WithMany(e => e.slides)
                     .HasForeignKey(e => e.IdContentType)
@@ -141,6 +141,161 @@ namespace Infrastructure.Persistence
                     .OnDelete(DeleteBehavior.Cascade);
             });
 
+            SeedData(modelBuilder);
+
         }
+
+        private void SeedData(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ContentType>().HasData(
+                new ContentType
+                {
+                    IdContentType = 1,
+                    ContentTypeName = "Texto",
+                    url = "text-content",
+                    CreatedAt = new DateTime(2023, 1, 1),
+                    ModifiedAt = null
+                },
+                new ContentType
+                {
+                    IdContentType = 2,
+                    ContentTypeName = "Imagen",
+                    url = "image-content",
+                    CreatedAt = new DateTime(2023, 1, 1),
+                    ModifiedAt = null
+                },
+                new ContentType
+                {
+                    IdContentType = 3,
+                    ContentTypeName = "Video",
+                    url = "video-content",
+                    CreatedAt = new DateTime(2023, 1, 1),
+                    ModifiedAt = null
+                },
+                new ContentType
+                {
+                    IdContentType = 4,
+                    ContentTypeName = "Pregunta",
+                    url = "question-content",
+                    CreatedAt = new DateTime(2023, 1, 1),
+                    ModifiedAt = null
+                }
+            );
+
+            modelBuilder.Entity<Ask>().HasData(
+                new Ask
+                {
+                    IdAsk = 1,
+                    Name = "Capital de Francia",
+                    Description = "Pregunta sobre geografía europea",
+                    AskText = "¿Cuál es la capital de Francia?",
+                    Answer = "París",
+                    CreatedAt = new DateTime(2023, 1, 1),
+                    ModifiedAt = null
+                },
+                new Ask
+                {
+                    IdAsk = 2,
+                    Name = "Matemáticas básicas",
+                    Description = "Pregunta de aritmética simple",
+                    AskText = "¿Cuánto es 2 + 2?",
+                    Answer = "4",
+                    CreatedAt = new DateTime(2023, 1, 1),
+                    ModifiedAt = null
+                },
+                new Ask
+                {
+                    IdAsk = 3,
+                    Name = "Historia universal",
+                    Description = "Pregunta sobre eventos históricos",
+                    AskText = "¿En qué año llegó Colón a América?",
+                    Answer = "1492",
+                    CreatedAt = new DateTime(2023, 1, 1),
+                    ModifiedAt = null
+                }
+            );
+
+            modelBuilder.Entity<Option>().HasData(
+                // Opciones para la pregunta 1 (Capital de Francia)
+                new Option
+                {
+                    IdOption = 1,
+                    OptionText = "Madrid",
+                    IdAsk = 1,
+                    CreatedAt = new DateTime(2023, 1, 1),
+                    ModifiedAt = null
+                },
+                new Option
+                {
+                    IdOption = 2,
+                    OptionText = "París",
+                    IdAsk = 1,
+                    CreatedAt = new DateTime(2023, 1, 1),
+                    ModifiedAt = null
+                },
+                new Option
+                {
+                    IdOption = 3,
+                    OptionText = "Berlín",
+                    IdAsk = 1,
+                    CreatedAt = new DateTime(2023, 1, 1),
+                    ModifiedAt = null
+                },
+
+                // Opciones para la pregunta 2 (Matemáticas básicas)
+                new Option
+                {
+                    IdOption = 4,
+                    OptionText = "3",
+                    IdAsk = 2,
+                    CreatedAt = new DateTime(2023, 1, 1),
+                    ModifiedAt = null
+                },
+                new Option
+                {
+                    IdOption = 5,
+                    OptionText = "4",
+                    IdAsk = 2,
+                    CreatedAt = new DateTime(2023, 1, 1),
+                    ModifiedAt = null
+                },
+                new Option
+                {
+                    IdOption = 6,
+                    OptionText = "5",
+                    IdAsk = 2,
+                    CreatedAt = new DateTime(2023, 1, 1),
+                    ModifiedAt = null
+                },
+
+                // Opciones para la pregunta 3 (Historia universal)
+                new Option
+                {
+                    IdOption = 7,
+                    OptionText = "1492",
+                    IdAsk = 3,
+                    CreatedAt = new DateTime(2023, 1, 1),
+                    ModifiedAt = null
+                },
+                new Option
+                {
+                    IdOption = 8,
+                    OptionText = "1501",
+                    IdAsk = 3,
+                    CreatedAt = new DateTime(2023, 1, 1),
+                    ModifiedAt = null
+                },
+                new Option
+                {
+                    IdOption = 9,
+                    OptionText = "1600",
+                    IdAsk = 3,
+                    CreatedAt = new DateTime(2023, 1, 1),
+                    ModifiedAt = null
+                }
+
+            );
+        }
+
     }
 }

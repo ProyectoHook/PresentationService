@@ -1,5 +1,5 @@
 ﻿using Application.Interfaces.Commands;
-using Application.Interfaces.Models;
+using Application.Models;
 using Application.Interfaces.Querys;
 using Application.Interfaces.Services;
 using Domain.Entities;
