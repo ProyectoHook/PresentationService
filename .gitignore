@@ -398,3 +398,15 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+
+# Ignore build output folders
+/build/
+/dist/
+
+# Ignore appsettings.json files
+appsettings.json
+appsettings.*.json
+
+# Ignore EF Core Migrations
+Migrations/

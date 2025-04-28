@@ -1,0 +1,57 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Application.UserCase;
+using Application.Request;
+using Application.Response;
+using Domain.Entities;
+using Application.Interfaces;
+
+namespace Template.Controllers
+{
+
+
+    [ApiController]
+    [Route("[controller]")]
+    public class PresentationController : ControllerBase
+    {
+        private readonly IPresentationService _presentationService;
+
+        public PresentationController(IPresentationService presentationService)
+        {
+            _presentationService = presentationService;
+        }
+
+        [HttpGet("/presentations")]
+        public async Task<IEnumerable<Presentation>> GetPresentations()
+        {
+            return await _presentationService.GetAllPresentations();
+        }
+
+        [HttpGet("/presentation/{id}")]
+        public async Task<Presentation> GetPresentation(int id)
+        {
+            return await _presentationService.GetPresentation(id);
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(PresentationResponse), 201)]
+        public async Task<IActionResult> CreatePresentation(PresentationRequest request)
+        {
+            try
+            {
+                var result = await _presentationService.CreatePresentation(request);
+                return new JsonResult(result) { StatusCode = 200 };
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+
+        }
+
+    }
+}
