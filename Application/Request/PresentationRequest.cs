@@ -16,8 +16,6 @@ namespace Application.Request
     {
         public string title { get; set; }
         public bool activityStatus { get; set; }
-        public DateTime modifiedAt { get; set; }
-        public DateTime createAt { get; set; }
         public Guid idUserCreat { get; set; }
 
     }

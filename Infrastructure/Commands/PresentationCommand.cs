@@ -23,7 +23,11 @@ namespace Infrastructure.Commands
             return presnetation;
 
         }
+        public async Task UpdatePresentation(Presentation presentation)
+        {
+            _context.Presentations.Update(presentation);
+            await _context.SaveChangesAsync();
+        }
 
-        
     }
 }
