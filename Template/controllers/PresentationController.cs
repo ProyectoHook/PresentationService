@@ -53,5 +53,21 @@ namespace Template.Controllers
 
         }
 
+        [HttpPut("{id}")]
+        [ProducesResponseType(typeof(PresentationResponse), 200)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> UpdatePresentation(int id, [FromBody] PresentationRequest request)
+        {
+            try
+            {
+                var updatedPresentation = await _presentationService.UpdatePresentation(id, request);
+                return Ok(updatedPresentation);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+        }
+
     }
 }

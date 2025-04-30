@@ -15,6 +15,7 @@ namespace Application.Interfaces
         Task<PresentationResponse> CreatePresentation(PresentationRequest request);
         Task<Presentation> GetPresentation(int id);
         Task<IEnumerable<Presentation>> GetAllPresentations();
-        
+        Task<PresentationResponse> UpdatePresentation(int id, PresentationRequest request);
+
     }
 }
