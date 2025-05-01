@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using Application.Interfaces.Commands;
-using Application.UserCase;
+using Application.UseCase;
 using Domain.Entities;
 using Infrastructure.Persistence;
  

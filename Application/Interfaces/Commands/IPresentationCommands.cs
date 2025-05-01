@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Application.UserCase;
+using Application.UseCase;
 using Domain.Entities;
 using Application.Request;
 

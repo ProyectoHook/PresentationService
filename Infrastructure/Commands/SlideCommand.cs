@@ -30,5 +30,11 @@ namespace Infrastructure.Commands
             _context.Slides.Update(slide);
             await _context.SaveChangesAsync();
         }
+
+        public async Task DeleteSlide(Slide slide)
+        {
+            _context.Slides.Remove(slide);
+            await _context.SaveChangesAsync();
+        }
     }
 }

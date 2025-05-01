@@ -1,12 +1,11 @@
 using System.Threading.Tasks;
-using Application.Interfaces;
 using Domain.Entities;
 using System.Collections.Generic;
 using Application.Request;
 using Application.Response;
 
 
-namespace Application.Interfaces
+namespace Application.Interfaces.Services
 {
 
 

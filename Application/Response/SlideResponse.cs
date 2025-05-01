@@ -4,12 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Models
+namespace Application.Response
 {
-    public class SlideRequest
+    public class SlideResponse
     {
+        public int IdSlide { get; set; }
         public int IdPresentation { get; set; }
         public string Title { get; set; }
+        public DateTime CreateAt { get; set; }
+        public DateTime ModifiedAt { get; set; }
         public int Position { get; set; }
         public string BackgroundColor { get; set; }
         public int IdAsk { get; set; }
