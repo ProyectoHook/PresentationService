@@ -11,5 +11,6 @@ namespace Application.Interfaces.Commands
     {
         Task InsertSlide(Slide slide);
         Task UpdateSlide(Slide slide);
+        Task DeleteSlide(Slide slide);
     }
 }

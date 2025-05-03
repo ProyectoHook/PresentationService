@@ -2,15 +2,15 @@ using Application.Interfaces.Commands;
 using Application.Interfaces.Querys;
 using Application.Request;
 using Application.Response;
-using Application.Interfaces;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.Interfaces.Services;
 
-namespace Application.UserCase
+namespace Application.UseCase
 {
     public class PresentationService : IPresentationService
     {

@@ -4,15 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Application.UserCase;
+using Application.UseCase;
 using Application.Request;
 using Application.Response;
 using Domain.Entities;
-using Application.Interfaces;
+using Application.Interfaces.Services;
 
 namespace Template.Controllers
 {
-
 
     [ApiController]
     [Route("[controller]")]
