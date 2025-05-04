@@ -24,12 +24,20 @@ builder.Services.AddScoped<ISlideService, SlideService>();
 builder.Services.AddScoped<ISlideQuery, SlideQuery>();
 builder.Services.AddScoped<ISlideCommand, SlideCommand>();
 
+builder.Services.AddScoped<IAskService, AskService>();
+builder.Services.AddScoped<IAskQuery, AskQuery>();
+builder.Services.AddScoped<IAskCommands, AskCommand>();
+
+builder.Services.AddScoped<IOptionService, OptionService>();
+builder.Services.AddScoped<IOptionQuery, OptionQuery>();
+builder.Services.AddScoped<IOptionCommands, OptionCommand>();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-//builder.Services.AddDbContext<ServiceContext>(options => options.UseSqlServer("DefaultConnection"));
-builder.Services.AddDbContext<ServiceContext>(options =>options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<ServiceContext>(options => options.UseSqlServer(connectionString));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
