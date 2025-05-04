@@ -4,7 +4,7 @@ using Application.UseCase;
 using Azure.Core;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebService.Controllers
+namespace Template.Controllers
 {
 
     [ApiController]
