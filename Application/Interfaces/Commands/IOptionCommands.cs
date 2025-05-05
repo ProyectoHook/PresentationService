@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces.Commands
 {
-    public interface ISlideCommand
+    public interface IOptionCommands
     {
-        Task InsertSlide(Slide slide);
-        Task UpdateSlide(Slide slide);
-        Task DeleteSlide(Slide slide);
+        Task<Option> InsertOption(Option option);
+        Task UpdateOption(Option option);
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 
 namespace Infrastructure.Persistence
 {
@@ -19,7 +20,7 @@ namespace Infrastructure.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ContentType>(entity => 
+            modelBuilder.Entity<ContentType>(entity =>
             {
                 entity.HasKey(e => e.IdContentType);
                 entity.Property(e => e.IdContentType)
@@ -91,7 +92,7 @@ namespace Infrastructure.Persistence
                 entity.Property(e => e.IdUserCreat)
                     .IsRequired()
                     .HasColumnType("uniqueidentifier");
-                
+
 
             });
             modelBuilder.Entity<Ask>(entity =>
@@ -296,6 +297,19 @@ namespace Infrastructure.Persistence
 
             );
         }
+        public class ServiceContextFactory : IDesignTimeDbContextFactory<ServiceContext>
+        {
+            public ServiceContext CreateDbContext(string[] args)
+            {
+                var optionsBuilder = new DbContextOptionsBuilder<ServiceContext>();
 
+                // Copia aquí la misma cadena que usás en appsettings.json
+                optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=Presentation;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True;");
+
+
+                return new ServiceContext(optionsBuilder.Options);
+            }
+        }
     }
 }
+

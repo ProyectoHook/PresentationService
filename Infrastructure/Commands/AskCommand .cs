@@ -1,6 +1,5 @@
 ﻿using Application.Interfaces.Commands;
 using Domain.Entities;
-using Infrastructure.Migrations;
 using Infrastructure.Persistence;
 using System;
 using System.Collections.Generic;
@@ -10,30 +9,25 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Commands
 {
-    public class SlideCommand:ISlideCommand
+    public class AskCommand : IAskCommands
     {
         private readonly ServiceContext _context;
 
-        public SlideCommand(ServiceContext context)
+        public AskCommand(ServiceContext context)
         {
             _context = context;
         }
 
-        public async Task InsertSlide(Slide slide)
+        public async Task<Ask> InsertAsk(Ask ask)
         {
-            _context.Add(slide);
+            await _context.asks.AddAsync(ask);
             await _context.SaveChangesAsync();
+            return ask;
         }
 
-        public async Task UpdateSlide(Slide slide)
+        public async Task UpdateAsk(Ask ask)
         {
-            _context.Slides.Update(slide);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task DeleteSlide(Slide slide)
-        {
-            _context.Slides.Remove(slide);
+            _context.asks.Update(ask);
             await _context.SaveChangesAsync();
         }
     }
