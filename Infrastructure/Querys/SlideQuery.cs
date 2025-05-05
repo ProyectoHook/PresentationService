@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace Infrastructure.Querys
 {
@@ -20,7 +22,9 @@ namespace Infrastructure.Querys
 
         public async Task<Slide> GetSlideId(int slideId)
         {
-            var slide = await _context.Slides.FindAsync(slideId);
+            var slide = await _context.Slides
+                .Include(s => s.Ask)
+                .FirstOrDefaultAsync(s => s.IdSlide == slideId);
 
             return slide;
         }

@@ -18,6 +18,7 @@ namespace Application.Response
         public DateTime modifiedAt { get; set; }
         public DateTime createdAt { get; set; }
         public Guid idUserCreat { get; set; }
+        public ICollection<Slide> slides { get; set; }
 
     }
 }

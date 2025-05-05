@@ -31,7 +31,7 @@ namespace Template.Controllers
         }
 
         [HttpGet("/presentation/{id}")]
-        public async Task<Presentation> GetPresentation(int id)
+        public async Task<PresentationResponse> GetPresentation(int id)
         {
             return await _presentationService.GetPresentation(id);
         }
