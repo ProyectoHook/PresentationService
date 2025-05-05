@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Template.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/v1/[controller]")]
     public class AskController : ControllerBase
     {
         private readonly IAskService _askService;
@@ -18,19 +18,19 @@ namespace Template.Controllers
             _askService = askService;
         }
 
-        [HttpGet("/asks")]
+        [HttpGet("GetAll")]
         public async Task<IEnumerable<Ask>> GetAsks()
         {
             return await _askService.GetAllAsks();
         }
 
-        [HttpGet("/ask/{id}")]
+        [HttpGet("GetById/{id}")]
         public async Task<Ask> GetAsk(int id)
         {
             return await _askService.GetAsk(id);
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         [ProducesResponseType(typeof(AskResponse), 201)]
         public async Task<IActionResult> CreateAsk([FromBody] AskRequest request)
         {
@@ -45,7 +45,7 @@ namespace Template.Controllers
             }
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("update/{id}")]
         [ProducesResponseType(typeof(AskResponse), 200)]
         [ProducesResponseType(404)]
         public async Task<IActionResult> UpdateAsk(int id, [FromBody] AskRequest request)
