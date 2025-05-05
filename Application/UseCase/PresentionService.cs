@@ -25,9 +25,19 @@ namespace Application.UseCase
         {
             return await _presentationQuery.GetAllPresentations();
         }
-        public async Task<Presentation> GetPresentation(int id)
+        public async Task<PresentationResponse> GetPresentation(int id)
         {
-            return await _presentationQuery.GetPresentation(id);
+            Presentation presentation = await _presentationQuery.GetPresentation(id);
+
+            PresentationResponse response = new PresentationResponse
+            {
+                title = presentation.Title,
+                activityStatus = presentation.ActivityStatus,
+                createdAt = presentation.CreatedAt,
+                idUserCreat = presentation.IdUserCreat,
+                slides = presentation.Slides
+            };
+            return response;
         }
         public async Task<PresentationResponse> CreatePresentation(PresentationRequest request)
         {

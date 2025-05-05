@@ -12,7 +12,7 @@ namespace Application.Interfaces.Services
     public interface IPresentationService
     {
         Task<PresentationResponse> CreatePresentation(PresentationRequest request);
-        Task<Presentation> GetPresentation(int id);
+        Task<PresentationResponse> GetPresentation(int id);
         Task<IEnumerable<Presentation>> GetAllPresentations();
         Task<PresentationResponse> UpdatePresentation(int id, PresentationRequest request);
 
