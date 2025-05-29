@@ -15,6 +15,7 @@ namespace Domain.Entities
         public DateTime CreatedAt { get; set; }
         public Guid IdUserCreat { get; set; }
         
+        //Navigation Properties
         public ICollection<Slide> Slides { get; set; }
 
 

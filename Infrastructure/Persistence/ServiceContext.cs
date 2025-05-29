@@ -60,18 +60,22 @@ namespace Infrastructure.Persistence
                 entity.Property(e => e.Position)
                     .IsRequired()
                     .HasColumnType("int");
-                entity.HasOne(e => e.Presentation)
-                    .WithMany(e => e.Slides)
-                    .HasForeignKey(e => e.IdPresentation)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
-                entity.HasOne(e => e.ContentType)
-                    .WithMany(e => e.slides)
-                    .HasForeignKey(e => e.IdContentType)
-                    .OnDelete(DeleteBehavior.Cascade);
-                entity.HasOne(e => e.Ask)
-                    .WithMany(e => e.slides)
-                    .HasForeignKey(e => e.IdAsk);
-                   // .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(s => s.Presentation)
+                    .WithMany(p => p.Slides)
+                    .HasForeignKey(s => s.IdPresentation);
+                //.OnDelete(DeleteBehavior.ClientSetNull);
+
+                entity.HasOne(s => s.ContentType)
+                    .WithMany(ct => ct.slides)
+                    .HasForeignKey(s => s.IdContentType);
+                //.OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(s => s.Ask)
+                    .WithMany(a => a.slides)
+                    .HasForeignKey(s => s.IdAsk);
+                //.OnDelete(DeleteBehavior.Cascade);
+
             });
             modelBuilder.Entity<Presentation>(entity =>
             {
