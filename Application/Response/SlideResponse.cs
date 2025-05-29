@@ -15,7 +15,7 @@ namespace Application.Response
         public DateTime ModifiedAt { get; set; }
         public int Position { get; set; }
         public string BackgroundColor { get; set; }
-        public int IdAsk { get; set; }
+        public int? IdAsk { get; set; }
         public int IdContentType { get; set; }
     }
 }

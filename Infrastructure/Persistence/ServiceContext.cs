@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure.Persistence
 {
@@ -36,8 +38,6 @@ namespace Infrastructure.Persistence
                     .HasColumnType("datetime");
                 entity.Property(e => e.ModifiedAt)
                     .HasColumnType("datetime");
-
-
 
             });
 
@@ -70,8 +70,8 @@ namespace Infrastructure.Persistence
                     .OnDelete(DeleteBehavior.Cascade);
                 entity.HasOne(e => e.Ask)
                     .WithMany(e => e.slides)
-                    .HasForeignKey(e => e.IdAsk)
-                    .OnDelete(DeleteBehavior.Cascade);
+                    .HasForeignKey(e => e.IdAsk);
+                   // .OnDelete(DeleteBehavior.Cascade);
             });
             modelBuilder.Entity<Presentation>(entity =>
             {
@@ -149,71 +149,17 @@ namespace Infrastructure.Persistence
         private void SeedData(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ContentType>().HasData(
-                new ContentType
-                {
-                    IdContentType = 1,
-                    ContentTypeName = "Texto",
-                    url = "text-content",
-                    CreatedAt = new DateTime(2023, 1, 1),
-                    ModifiedAt = null
-                },
-                new ContentType
-                {
-                    IdContentType = 2,
-                    ContentTypeName = "Imagen",
-                    url = "image-content",
-                    CreatedAt = new DateTime(2023, 1, 1),
-                    ModifiedAt = null
-                },
-                new ContentType
-                {
-                    IdContentType = 3,
-                    ContentTypeName = "Video",
-                    url = "video-content",
-                    CreatedAt = new DateTime(2023, 1, 1),
-                    ModifiedAt = null
-                },
-                new ContentType
-                {
-                    IdContentType = 4,
-                    ContentTypeName = "Pregunta",
-                    url = "question-content",
-                    CreatedAt = new DateTime(2023, 1, 1),
-                    ModifiedAt = null
-                }
+                new ContentType {IdContentType=1,ContentTypeName = "Texto", url = "text-content", CreatedAt = new DateTime(2023,1,1),ModifiedAt=null},
+                new ContentType {IdContentType=2,ContentTypeName = "Imagen", url = "image-content", CreatedAt = new DateTime(2023,1,1),ModifiedAt=null},
+                new ContentType {IdContentType=3,ContentTypeName = "Video", url = "video-content", CreatedAt = new DateTime(2023,1,1),ModifiedAt=null},
+                new ContentType {IdContentType=4,ContentTypeName = "Pregunta", url = "question-content", CreatedAt = new DateTime(2023,1,1),ModifiedAt=null}
             );
 
             modelBuilder.Entity<Ask>().HasData(
-                new Ask
-                {
-                    IdAsk = 1,
-                    Name = "Capital de Francia",
-                    Description = "Pregunta sobre geografía europea",
-                    AskText = "¿Cuál es la capital de Francia?",
-                    Answer = "París",
-                    CreatedAt = new DateTime(2023, 1, 1),
-                    ModifiedAt = null
-                },
-                new Ask
-                {
-                    IdAsk = 2,
-                    Name = "Matemáticas básicas",
-                    Description = "Pregunta de aritmética simple",
-                    AskText = "¿Cuánto es 2 + 2?",
-                    Answer = "4",
-                    CreatedAt = new DateTime(2023, 1, 1),
-                    ModifiedAt = null
-                },
-                new Ask
-                {
-                    IdAsk = 3,
-                    Name = "Historia universal",
-                    Description = "Pregunta sobre eventos históricos",
-                    AskText = "¿En qué año llegó Colón a América?",
-                    Answer = "1492",
-                    CreatedAt = new DateTime(2023, 1, 1),
-                    ModifiedAt = null
-                }
+                new Ask { IdAsk = 1, Name = "Capital de Francia", Description = "Pregunta sobre geografía europea", AskText = "¿Cuál es la capital de Francia?", Answer = "París", CreatedAt = new DateTime(2023, 1, 1), ModifiedAt = null },
+                new Ask { IdAsk=2,Name="Capital de Francia",Description = "Pregunta sobre geografía europea",AskText = "¿Cuál es la capital de Francia?",Answer = "París",CreatedAt = new DateTime(2023,1,1),ModifiedAt=null},
+                new Ask { IdAsk=3,Name="Matemáticas básicas",Description = "Pregunta de aritmética simple",AskText = "¿Cuánto es 2 + 2?",Answer = "4",CreatedAt = new DateTime(2023,1,1),ModifiedAt=null},
+                new Ask { IdAsk=4,Name="Historia universal",Description = "Pregunta sobre eventos históricos",AskText = "¿En qué año llegó Colón a América?",Answer = "1492",CreatedAt = new DateTime(2023,1,1),ModifiedAt=null}
             );
 
             modelBuilder.Entity<Option>().HasData(
@@ -302,9 +248,11 @@ namespace Infrastructure.Persistence
             public ServiceContext CreateDbContext(string[] args)
             {
                 var optionsBuilder = new DbContextOptionsBuilder<ServiceContext>();
-
+               
                 // Copia aquí la misma cadena que usás en appsettings.json
-                optionsBuilder.UseSqlServer("Server=Flor\\SQLEXPRESS;Database=Presentation;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True;");
+                //optionsBuilder.UseSqlServer("Server=Flor\\SQLEXPRESS;Database=Presentation;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True;");
+                optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=Presentation;Trusted_Connection=True;");
+
 
                 return new ServiceContext(optionsBuilder.Options);
             }

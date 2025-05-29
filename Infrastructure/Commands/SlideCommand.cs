@@ -1,6 +1,5 @@
 ﻿using Application.Interfaces.Commands;
 using Domain.Entities;
-using Infrastructure.Migrations;
 using Infrastructure.Persistence;
 using System;
 using System.Collections.Generic;
