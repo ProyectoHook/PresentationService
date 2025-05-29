@@ -64,7 +64,8 @@ namespace Application.UseCase
         {
             var slide = await _slideQuery.GetSlideId(slideId);
 
-            await _slideCommand.DeleteSlide(slide);
+            throw new Exception("not implemented");
+            //await _slideCommand.DeleteSlide(slide);
         }
 
         public async Task<SlideResponse> UpdateSlide(int slideId, SlideRequest request)
