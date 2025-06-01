@@ -36,6 +36,7 @@ namespace Application.UseCase
                 _slide.IdContentType = request.IdContentType;
                 _slide.CreateAt = DateTime.Now;
                 _slide.ModifiedAt = DateTime.Now;
+                _slide.Content = request.Content;
             
   
             await _slideCommand.InsertSlide(_slide);
@@ -50,7 +51,8 @@ namespace Application.UseCase
                 IdAsk = _slide.IdAsk,
                 IdContentType = _slide.IdContentType,
                 CreateAt = DateTime.Now,
-                ModifiedAt = DateTime.Now
+                ModifiedAt = DateTime.Now,
+                Content = _slide.Content
             };
             return slideResponde;
         }

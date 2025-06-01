@@ -17,6 +17,7 @@ namespace Domain.Entities
         public string BackgroundColor { get; set; }
         public int? IdAsk { get; set; }
         public int IdContentType { get; set; }
+        public string Content { get; set; }
 
         //Navigation Properties
         public Presentation Presentation { get; set; }
