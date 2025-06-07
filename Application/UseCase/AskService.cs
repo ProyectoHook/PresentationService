@@ -16,11 +16,14 @@ namespace Application.UseCase
     {
         private readonly IAskCommands _askCommand;
         private readonly IAskQuery _askQuery;
+        private readonly ISlideService _service;
 
-        public AskService(IAskQuery askQuery, IAskCommands askCommand)
+
+        public AskService(IAskQuery askQuery, IAskCommands askComman, ISlideService slideService)
         {
             _askQuery = askQuery;
-            _askCommand = askCommand;
+            _askCommand = askComman;
+            _service = slideService;
         }
 
         public async Task<IEnumerable<Ask>> GetAllAsks()
@@ -35,6 +38,11 @@ namespace Application.UseCase
 
         public async Task<AskResponse> CreateAsk(AskRequest request)
         {
+            if (request.IdSlide == null)
+                throw new Exception("Name is required");
+            Slide slide = _service.GetSlideId(request.IdSlide).Result;
+            if (slide == null)
+                throw new Exception("Slide not found");
             Ask ask = new Ask
             {
                 Name = request.Name,
@@ -44,7 +52,17 @@ namespace Application.UseCase
                 CreatedAt = DateTime.Now
             };
 
-            await _askCommand.InsertAsk(ask);
+            Ask askDb = await _askCommand.InsertAsk(ask);            
+            SlideRequest slideRequest = new SlideRequest
+            {
+                IdPresentation = slide.IdSlide,
+                Title = slide.Title,
+                Position = slide.Position,
+                BackgroundColor = slide.BackgroundColor,
+                IdAsk = askDb.IdAsk,
+                IdContentType = slide.IdContentType,
+            };
+            _service.UpdateSlide(slide.IdSlide, slideRequest);
 
             return new AskResponse
             {

@@ -8,7 +8,7 @@ namespace Template.Controllers
 {
 
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/v1/[controller]")]
     public class SlideController:ControllerBase
     {
         private readonly ISlideService _service;
@@ -19,7 +19,7 @@ namespace Template.Controllers
         }
 
 
-        [HttpGet("slide/{slideId}")]
+        [HttpGet("GetById/{slideId}")]
         public async Task<IActionResult> GetSlideId(int slideId)
         {
             {
@@ -36,7 +36,7 @@ namespace Template.Controllers
             }
         }
 
-        [HttpDelete("{slideId}")]
+        [HttpDelete("delete/{slideId}")]
         public IActionResult DeleteSlide(int slideId)
         {
             try
@@ -51,7 +51,7 @@ namespace Template.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateAsync(SlideRequest request)
         {
             try
@@ -65,7 +65,7 @@ namespace Template.Controllers
             }
         }
 
-        [HttpPut("{slideId}")]
+        [HttpPut("update/{slideId}")]
         public async Task<IActionResult> UpdateSlide(int slideId, SlideRequest request)
         {
             try

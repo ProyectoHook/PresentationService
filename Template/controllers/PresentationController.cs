@@ -14,7 +14,7 @@ namespace Template.Controllers
 {
 
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/v1/[controller]")]
     public class PresentationController : ControllerBase
     {
         private readonly IPresentationService _presentationService;
@@ -24,19 +24,19 @@ namespace Template.Controllers
             _presentationService = presentationService;
         }
 
-        [HttpGet("/presentations")]
+        [HttpGet("GetAll")]
         public async Task<IEnumerable<Presentation>> GetPresentations()
         {
             return await _presentationService.GetAllPresentations();
         }
 
-        [HttpGet("/presentation/{id}")]
-        public async Task<Presentation> GetPresentation(int id)
+        [HttpGet("GetById/{id}")]
+        public async Task<PresentationResponse> GetPresentation(int id)
         {
             return await _presentationService.GetPresentation(id);
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         [ProducesResponseType(typeof(PresentationResponse), 201)]
         public async Task<IActionResult> CreatePresentation(PresentationRequest request)
         {
@@ -52,7 +52,7 @@ namespace Template.Controllers
 
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("update/{id}")]
         [ProducesResponseType(typeof(PresentationResponse), 200)]
         [ProducesResponseType(404)]
         public async Task<IActionResult> UpdatePresentation(int id, [FromBody] PresentationRequest request)
