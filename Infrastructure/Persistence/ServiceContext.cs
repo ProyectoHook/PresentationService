@@ -273,7 +273,6 @@ namespace Infrastructure.Persistence
                 //optionsBuilder.UseSqlServer("Server=Flor\\SQLEXPRESS;Database=Presentation;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True;");
                 optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=Presentation;Trusted_Connection=True;");
 
-
                 return new ServiceContext(optionsBuilder.Options);
             }
         }

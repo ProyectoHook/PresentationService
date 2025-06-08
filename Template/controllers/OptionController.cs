@@ -12,7 +12,7 @@ namespace Template.controllers
 {
 
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/v1/[controller]")]
     public class OptionController : ControllerBase
     {
         private readonly IOptionService _optionService;
@@ -22,19 +22,19 @@ namespace Template.controllers
             _optionService = optionService;
         }
 
-        [HttpGet("/options")]
+        [HttpGet("GetAll")]
         public async Task<IEnumerable<Option>> GetOptions()
         {
             return await _optionService.GetAllOptions();
         }
 
-        [HttpGet("/option/{id}")]
+        [HttpGet("GetById/{id}")]
         public async Task<Option> GetOption(int id)
         {
             return await _optionService.GetOption(id);
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         [ProducesResponseType(typeof(OptionResponse), 201)]
         public async Task<IActionResult> CreateOption([FromBody] OptionRequest request)
         {
@@ -49,7 +49,7 @@ namespace Template.controllers
             }
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("update/{id}")]
         [ProducesResponseType(typeof(OptionResponse), 200)]
         [ProducesResponseType(404)]
         public async Task<IActionResult> UpdateOption(int id, [FromBody] OptionRequest request)

@@ -48,12 +48,18 @@ namespace Application.UseCase
                 Title = _slide.Title,
                 Position = _slide.Position,
                 BackgroundColor = _slide.BackgroundColor,
-                IdAsk = _slide.IdAsk,
-                IdContentType = _slide.IdContentType,
                 CreateAt = DateTime.Now,
                 ModifiedAt = DateTime.Now,
                 Content = _slide.Content
             };
+            if (_slide.IdAsk != null)
+            {
+                slideResponde.IdAsk = (int)_slide.IdAsk!;
+            }
+            if (_slide.IdContentType != null)
+            {
+                slideResponde.IdContentType = (int)_slide.IdContentType!;
+            }
             return slideResponde;
         }
 

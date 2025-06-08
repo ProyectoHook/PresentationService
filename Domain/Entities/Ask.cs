@@ -17,7 +17,6 @@ namespace Domain.Entities
         public DateTime CreatedAt { get; set; }
         
 
-        public ICollection<Slide> slides { get; set; }
         public ICollection<Option> options { get; set; }
 
     }
