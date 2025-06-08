@@ -26,18 +26,18 @@ namespace Application.UseCase
         public async Task<SlideResponse> CreateAsync(SlideRequest request)
 
         {
-            var _slide = new Slide
-            { 
-                IdPresentation = request.IdPresentation,
-                Title = request.Title,
-                Position = request.Position,
-                BackgroundColor = request.BackgroundColor,
-                IdAsk = request.IdAsk,
-                IdContentType = request.IdContentType,
-                CreateAt = DateTime.Now,
-                ModifiedAt = DateTime.Now
-                };
-
+            Slide _slide = new Slide();
+            
+                _slide.IdPresentation = request.IdPresentation;
+                _slide.Title = request.Title;
+                _slide.Position = request.Position;
+                _slide.BackgroundColor = request.BackgroundColor;
+                if(request.IdAsk > 0) _slide.IdAsk = request.IdAsk;
+                _slide.IdContentType = request.IdContentType;
+                _slide.CreateAt = DateTime.Now;
+                _slide.ModifiedAt = DateTime.Now;
+                _slide.Content = request.Content;
+            
   
             await _slideCommand.InsertSlide(_slide);
 
@@ -49,6 +49,8 @@ namespace Application.UseCase
                 Position = _slide.Position,
                 BackgroundColor = _slide.BackgroundColor,
                 CreateAt = DateTime.Now,
+                ModifiedAt = DateTime.Now,
+                Content = _slide.Content
             };
             if (_slide.IdAsk != null)
             {
@@ -70,7 +72,8 @@ namespace Application.UseCase
         {
             var slide = await _slideQuery.GetSlideId(slideId);
 
-            await _slideCommand.DeleteSlide(slide);
+            throw new Exception("not implemented");
+            //await _slideCommand.DeleteSlide(slide);
         }
 
         public async Task<SlideResponse> UpdateSlide(int slideId, SlideRequest request)

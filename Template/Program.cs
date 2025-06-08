@@ -9,6 +9,7 @@ using Application.Interfaces.Querys;
 using Infrastructure.Querys;
 using Infrastructure.Commands;
 using Application.Interfaces.Services;
+using Application.Mappers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +32,9 @@ builder.Services.AddScoped<IAskCommands, AskCommand>();
 builder.Services.AddScoped<IOptionService, OptionService>();
 builder.Services.AddScoped<IOptionQuery, OptionQuery>();
 builder.Services.AddScoped<IOptionCommands, OptionCommand>();
+
+//Mapper
+builder.Services.AddAutoMapper(typeof(Mapping));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
