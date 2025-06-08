@@ -9,7 +9,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Application.Interfaces.Services;
-using AutoMapper;
 
 namespace Application.UseCase
 {
@@ -17,12 +16,10 @@ namespace Application.UseCase
     {
         private readonly IPresentationQuery _presentationQuery;
         private readonly IPresentationCommands _presentationCommand;
-        private readonly IMapper _mapper;
-        public PresentationService(IPresentationQuery presentationQuery, IPresentationCommands presentationCommand, IMapper mapper)
+        public PresentationService(IPresentationQuery presentationQuery, IPresentationCommands presentationCommand)
         {
             _presentationQuery = presentationQuery;
             _presentationCommand = presentationCommand;
-            _mapper = mapper;
         }
         public async Task<IEnumerable<Presentation>> GetAllPresentations()
         {
@@ -30,14 +27,17 @@ namespace Application.UseCase
         }
         public async Task<PresentationResponse> GetPresentation(int id)
         {
-            PresentationResponse presentationResponse;
-            Presentation presentation;
+            Presentation presentation = await _presentationQuery.GetPresentation(id);
 
-            presentation = await _presentationQuery.GetPresentation(id);
-
-            presentationResponse = _mapper.Map<PresentationResponse>(presentation); 
-
-            return presentationResponse;
+            PresentationResponse response = new PresentationResponse
+            {
+                title = presentation.Title,
+                activityStatus = presentation.ActivityStatus,
+                createdAt = presentation.CreatedAt,
+                idUserCreat = presentation.IdUserCreat,
+                slides = presentation.Slides
+            };
+            return response;
         }
         public async Task<PresentationResponse> CreatePresentation(PresentationRequest request)
         {

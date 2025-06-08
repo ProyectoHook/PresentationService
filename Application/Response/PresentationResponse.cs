@@ -7,6 +7,10 @@ using Domain.Entities;
 
 namespace Application.Response
 {
+
+    // PresentationRequest class
+    // This class is used to represent a request for creating or updating a presentation.
+    // It contains properties that are necessary for the creation or update of a presentation.
     public class PresentationResponse
     {
         public string title { get; set; }
@@ -14,7 +18,7 @@ namespace Application.Response
         public DateTime modifiedAt { get; set; }
         public DateTime createdAt { get; set; }
         public Guid idUserCreat { get; set; }
-        public List<SlideResponse> Slides { get; set; }
+        public ICollection<Slide> slides { get; set; }
 
     }
 }
