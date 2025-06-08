@@ -11,24 +11,18 @@ namespace Domain.Entities
     {
         public int IdSlide { get; set; }
         public int IdPresentation { get; set; }
+        [JsonIgnore]
+        public Presentation Presentation { get; set; }
         public string Title { get; set; }
         public DateTime CreateAt { get; set; }
         public DateTime? ModifiedAt { get; set; }
         public int Position { get; set; }
         public string BackgroundColor { get; set; }
         public int? IdAsk { get; set; }
-        public int IdContentType { get; set; }
-        public string Content { get; set; }
-
-        //Navigation Properties
-        public Presentation Presentation { get; set; }
-        public Ask Ask { get; set; }
-        public ContentType ContentType { get; set; }
-
+        public Ask? Ask { get; set; }
 
         public int? IdContentType { get; set; }
         public ContentType? ContentType { get; set; }
-
 
     }
 }
