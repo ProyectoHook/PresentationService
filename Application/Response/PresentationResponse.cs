@@ -15,10 +15,10 @@ namespace Application.Response
     {
         public string title { get; set; }
         public bool activityStatus { get; set; }
-        public DateTime modifiedAt { get; set; }
+        public DateTime? modifiedAt { get; set; }
         public DateTime createdAt { get; set; }
         public Guid idUserCreat { get; set; }
-        public ICollection<Slide> slides { get; set; }
+        public List<slideResponseDto> slides { get; set; }
 
     }
 }

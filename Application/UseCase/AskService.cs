@@ -48,7 +48,6 @@ namespace Application.UseCase
                 Name = request.Name,
                 Description = request.Description,
                 AskText = request.AskText,
-                Answer = request.Answer,
                 CreatedAt = DateTime.Now
             };
 
@@ -59,8 +58,7 @@ namespace Application.UseCase
                 Title = slide.Title,
                 Position = slide.Position,
                 BackgroundColor = slide.BackgroundColor,
-                IdAsk = askDb.IdAsk,
-                IdContentType = slide.IdContentType,
+                IdAsk = askDb.IdAsk
             };
             _service.UpdateSlide(slide.IdSlide, slideRequest);
 
@@ -70,7 +68,6 @@ namespace Application.UseCase
                 Name = ask.Name,
                 Description = ask.Description,
                 AskText = ask.AskText,
-                Answer = ask.Answer,
                 CreatedAt = ask.CreatedAt,
                 ModifiedAt = ask.ModifiedAt
             };
@@ -86,7 +83,6 @@ namespace Application.UseCase
             ask.Name = request.Name;
             ask.Description = request.Description;
             ask.AskText = request.AskText;
-            ask.Answer = request.Answer;
             ask.ModifiedAt = DateTime.Now;
 
             await _askCommand.UpdateAsk(ask);
@@ -95,8 +91,7 @@ namespace Application.UseCase
             {
                 Name = ask.Name,
                 Description = ask.Description,
-                AskText = ask.AskText,    
-                Answer = ask.Answer,
+                AskText = ask.AskText,
                 CreatedAt = ask.CreatedAt,
                 ModifiedAt = ask.ModifiedAt
             };

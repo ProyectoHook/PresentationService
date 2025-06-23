@@ -28,8 +28,11 @@ namespace Infrastructure.Querys
         {
             return await _context.Presentations
                 .Include(p => p.Slides)
+                    .ThenInclude(s => s.Ask)
+                        .ThenInclude(a => a.Options)
                 .FirstOrDefaultAsync(p => p.IdPresentation == id);
         }
+
 
     }
 }

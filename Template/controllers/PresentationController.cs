@@ -31,10 +31,26 @@ namespace Template.Controllers
         }
 
         [HttpGet("GetById/{id}")]
-        public async Task<PresentationResponse> GetPresentation(int id)
+        [ProducesResponseType(typeof(PresentationResponse), 200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> GetPresentation(int id)
         {
-            return await _presentationService.GetPresentation(id);
+            try
+            {
+                var response = await _presentationService.GetPresentation(id);
+
+                if (response == null)
+                    return NotFound(); // 404 si no se encuentra
+
+                return Ok(response); // 200 con el objeto
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = ex.Message }); 
+            }
         }
+
 
         [HttpPost("create")]
         [ProducesResponseType(typeof(PresentationResponse), 201)]

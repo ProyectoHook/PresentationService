@@ -32,8 +32,7 @@ namespace Application.UseCase
                 Title = request.Title,
                 Position = request.Position,
                 BackgroundColor = request.BackgroundColor,
-                IdAsk = request.IdAsk,
-                IdContentType = request.IdContentType,
+                Url = request.url,
                 CreateAt = DateTime.Now,
                 ModifiedAt = DateTime.Now
                 };
@@ -50,14 +49,7 @@ namespace Application.UseCase
                 BackgroundColor = _slide.BackgroundColor,
                 CreateAt = DateTime.Now,
             };
-            if (_slide.IdAsk != null)
-            {
-                slideResponde.IdAsk = (int)_slide.IdAsk!;
-            }
-            if (_slide.IdContentType != null)
-            {
-                slideResponde.IdContentType = (int)_slide.IdContentType!;
-            }
+          
             return slideResponde;
         }
 
@@ -85,8 +77,7 @@ namespace Application.UseCase
             slide.Title = request.Title;
             slide.Position = request.Position;
             slide.BackgroundColor = request.BackgroundColor;
-            slide.IdAsk = request.IdAsk;
-            slide.IdContentType = request.IdContentType;
+            slide.Url = request.url;
             slide.ModifiedAt = DateTime.Now;
 
             await _slideCommand.UpdateSlide(slide);
@@ -99,7 +90,7 @@ namespace Application.UseCase
                 Position = request.Position,
                 BackgroundColor = request.BackgroundColor,
                 IdAsk = request.IdAsk,
-                IdContentType = request.IdContentType,
+                url = request.url,
                 CreateAt = slide.CreateAt,
                 ModifiedAt = DateTime.Now
             };

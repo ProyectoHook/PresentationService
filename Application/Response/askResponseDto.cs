@@ -3,24 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Entities;
 
-namespace Domain.Entities
+namespace Application.Response
 {
-    public class Ask
+    public class askResponseDto
     {
-        public int IdAsk { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string AskText { get; set; }
-
-        // Relación 1:N: muchas opciones
-        public ICollection<Option> Options { get; set; } = new List<Option>();
-
-        public int SlideId { get; set; }
-        public Slide Slide { get; set; }
-
+        public List<optionResponseDto> Options { get; set; }
         public DateTime? ModifiedAt { get; set; }
         public DateTime CreatedAt { get; set; }
     }
-
 }

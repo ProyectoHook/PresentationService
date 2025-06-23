@@ -25,20 +25,56 @@ namespace Application.UseCase
         {
             return await _presentationQuery.GetAllPresentations();
         }
+
+
         public async Task<PresentationResponse> GetPresentation(int id)
         {
             Presentation presentation = await _presentationQuery.GetPresentation(id);
+
+            if (presentation == null)
+                return null;
 
             PresentationResponse response = new PresentationResponse
             {
                 title = presentation.Title,
                 activityStatus = presentation.ActivityStatus,
+                modifiedAt = presentation.ModifiedAt,
                 createdAt = presentation.CreatedAt,
                 idUserCreat = presentation.IdUserCreat,
-                slides = presentation.Slides
+                slides = presentation.Slides?.Select(slide => new slideResponseDto
+                {
+                    IdSlide = slide.IdSlide,
+                    Url = slide.Url,
+                    BackgroundColor = slide.BackgroundColor,
+                    Title = slide.Title,
+                    CreateAt = slide.CreateAt,
+                    ModifiedAt = slide.ModifiedAt,
+                    Position = slide.Position,
+                    Ask = slide.Ask == null ? null : new askResponseDto
+                    {
+                        Name = slide.Ask.Name,
+                        Description = slide.Ask.Description,
+                        AskText = slide.Ask.AskText,
+                        CreatedAt = slide.Ask.CreatedAt,
+                        ModifiedAt = slide.Ask.ModifiedAt,
+                        Options = slide.Ask.Options?.Select(option => new optionResponseDto
+                        {
+                            IdOption = option.IdOption,
+                            OptionText = option.OptionText,
+                            IsCorrect = option.IsCorrect,
+                            IdAsk = option.IdAsk,
+                            CreatedAt = option.CreatedAt,
+                            ModifiedAt = option.ModifiedAt
+                        }).ToList()
+                    }
+                }).ToList()
             };
+
             return response;
         }
+
+
+
         public async Task<PresentationResponse> CreatePresentation(PresentationRequest request)
         {
 

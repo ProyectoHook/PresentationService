@@ -13,6 +13,7 @@ namespace Application.Response
         public string Title { get; set; }
         public DateTime CreateAt { get; set; }
         public DateTime? ModifiedAt { get; set; }
+        public string? url { get; set; }
         public int Position { get; set; }
         public string BackgroundColor { get; set; }
         public int? IdAsk { get; set; }

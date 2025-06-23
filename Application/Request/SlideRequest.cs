@@ -13,6 +13,7 @@ namespace Application.Request
         public int Position { get; set; }
         public string BackgroundColor { get; set; }
         public int? IdAsk { get; set; }
-        public int? IdContentType { get; set; }
+        public string? url { get; set; }
+
     }
 }

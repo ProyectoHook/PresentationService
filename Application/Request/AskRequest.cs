@@ -11,7 +11,7 @@ namespace Application.Request
         public string Name { get; set; }
         public string Description { get; set; }
         public string AskText { get; set; }
-        public string Answer { get; set; }
+        public int Answer { get; set; }
         public int IdSlide { get; set; }
     }
 }

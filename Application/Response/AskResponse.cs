@@ -12,7 +12,7 @@ namespace Application.Response
         public string Name { get; set; }
         public string Description { get; set; }
         public string AskText { get; set; }
-        public string Answer { get; set; }
+        public int CorrectOptionId { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? ModifiedAt { get; set; }
     }

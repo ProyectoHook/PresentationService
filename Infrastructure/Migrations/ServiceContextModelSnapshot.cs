@@ -30,117 +30,33 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdAsk"));
 
-                    b.Property<string>("Answer")
-                        .IsRequired()
-                        .HasColumnType("varchar(100)");
-
                     b.Property<string>("AskText")
                         .IsRequired()
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("ModifiedAt")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SlideId")
+                        .HasColumnType("int");
 
                     b.HasKey("IdAsk");
 
+                    b.HasIndex("SlideId")
+                        .IsUnique();
+
                     b.ToTable("asks");
-
-                    b.HasData(
-                        new
-                        {
-                            IdAsk = 1,
-                            Answer = "París",
-                            AskText = "¿Cuál es la capital de Francia?",
-                            CreatedAt = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Pregunta sobre geografía europea",
-                            Name = "Capital de Francia"
-                        },
-                        new
-                        {
-                            IdAsk = 2,
-                            Answer = "4",
-                            AskText = "¿Cuánto es 2 + 2?",
-                            CreatedAt = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Pregunta de aritmética simple",
-                            Name = "Matemáticas básicas"
-                        },
-                        new
-                        {
-                            IdAsk = 3,
-                            Answer = "1492",
-                            AskText = "¿En qué año llegó Colón a América?",
-                            CreatedAt = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Pregunta sobre eventos históricos",
-                            Name = "Historia universal"
-                        });
-                });
-
-            modelBuilder.Entity("Domain.Entities.ContentType", b =>
-                {
-                    b.Property<int>("IdContentType")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdContentType"));
-
-                    b.Property<string>("ContentTypeName")
-                        .IsRequired()
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime");
-
-                    b.Property<DateTime?>("ModifiedAt")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("url")
-                        .IsRequired()
-                        .HasColumnType("varchar(max)");
-
-                    b.HasKey("IdContentType");
-
-                    b.ToTable("ContentTypes");
-
-                    b.HasData(
-                        new
-                        {
-                            IdContentType = 1,
-                            ContentTypeName = "Texto",
-                            CreatedAt = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            url = "text-content"
-                        },
-                        new
-                        {
-                            IdContentType = 2,
-                            ContentTypeName = "Imagen",
-                            CreatedAt = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            url = "image-content"
-                        },
-                        new
-                        {
-                            IdContentType = 3,
-                            ContentTypeName = "Video",
-                            CreatedAt = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            url = "video-content"
-                        },
-                        new
-                        {
-                            IdContentType = 4,
-                            ContentTypeName = "Pregunta",
-                            CreatedAt = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            url = "question-content"
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Option", b =>
@@ -152,88 +68,26 @@ namespace Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdOption"));
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("IdAsk")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsCorrect")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("ModifiedAt")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("OptionText")
                         .IsRequired()
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IdOption");
 
                     b.HasIndex("IdAsk");
 
                     b.ToTable("options");
-
-                    b.HasData(
-                        new
-                        {
-                            IdOption = 1,
-                            CreatedAt = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdAsk = 1,
-                            OptionText = "Madrid"
-                        },
-                        new
-                        {
-                            IdOption = 2,
-                            CreatedAt = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdAsk = 1,
-                            OptionText = "París"
-                        },
-                        new
-                        {
-                            IdOption = 3,
-                            CreatedAt = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdAsk = 1,
-                            OptionText = "Berlín"
-                        },
-                        new
-                        {
-                            IdOption = 4,
-                            CreatedAt = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdAsk = 2,
-                            OptionText = "3"
-                        },
-                        new
-                        {
-                            IdOption = 5,
-                            CreatedAt = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdAsk = 2,
-                            OptionText = "4"
-                        },
-                        new
-                        {
-                            IdOption = 6,
-                            CreatedAt = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdAsk = 2,
-                            OptionText = "5"
-                        },
-                        new
-                        {
-                            IdOption = 7,
-                            CreatedAt = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdAsk = 3,
-                            OptionText = "1492"
-                        },
-                        new
-                        {
-                            IdOption = 8,
-                            CreatedAt = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdAsk = 3,
-                            OptionText = "1501"
-                        },
-                        new
-                        {
-                            IdOption = 9,
-                            CreatedAt = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdAsk = 3,
-                            OptionText = "1600"
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Presentation", b =>
@@ -275,47 +129,52 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("BackgroundColor")
                         .IsRequired()
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreateAt")
-                        .HasColumnType("datetime");
-
-                    b.Property<int?>("IdAsk")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("IdContentType")
-                        .HasColumnType("int");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("IdPresentation")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("ModifiedAt")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("Position")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("varchar(50)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IdSlide");
-
-                    b.HasIndex("IdAsk");
-
-                    b.HasIndex("IdContentType");
 
                     b.HasIndex("IdPresentation");
 
                     b.ToTable("Slides");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Ask", b =>
+                {
+                    b.HasOne("Domain.Entities.Slide", "Slide")
+                        .WithOne("Ask")
+                        .HasForeignKey("Domain.Entities.Ask", "SlideId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Slide");
+                });
+
             modelBuilder.Entity("Domain.Entities.Option", b =>
                 {
                     b.HasOne("Domain.Entities.Ask", "Ask")
-                        .WithMany("options")
+                        .WithMany("Options")
                         .HasForeignKey("IdAsk")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Ask");
@@ -323,43 +182,28 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Slide", b =>
                 {
-                    b.HasOne("Domain.Entities.Ask", "Ask")
-                        .WithMany("slides")
-                        .HasForeignKey("IdAsk")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Domain.Entities.ContentType", "ContentType")
-                        .WithMany("slides")
-                        .HasForeignKey("IdContentType")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("Domain.Entities.Presentation", "Presentation")
                         .WithMany("Slides")
                         .HasForeignKey("IdPresentation")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("Ask");
-
-                    b.Navigation("ContentType");
 
                     b.Navigation("Presentation");
                 });
 
             modelBuilder.Entity("Domain.Entities.Ask", b =>
                 {
-                    b.Navigation("options");
-
-                    b.Navigation("slides");
-                });
-
-            modelBuilder.Entity("Domain.Entities.ContentType", b =>
-                {
-                    b.Navigation("slides");
+                    b.Navigation("Options");
                 });
 
             modelBuilder.Entity("Domain.Entities.Presentation", b =>
                 {
                     b.Navigation("Slides");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Slide", b =>
+                {
+                    b.Navigation("Ask");
                 });
 #pragma warning restore 612, 618
         }
