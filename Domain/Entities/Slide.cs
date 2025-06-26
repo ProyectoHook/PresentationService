@@ -14,7 +14,10 @@ namespace Domain.Entities
         public string BackgroundColor { get; set; }
         public int IdPresentation { get; set; }
         public Presentation Presentation { get; set; }
+        public int IdContentType { get; set; }
+        public List<ContentType> ContentTypes { get; set; }
         public string Title { get; set; }
+        public string? Content { get; set; }
         public DateTime CreateAt { get; set; }
         public DateTime? ModifiedAt { get; set; }
         public int Position { get; set; }

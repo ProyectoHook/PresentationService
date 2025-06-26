@@ -1,10 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Application.UseCase;
 using Application.Request;
 using Application.Response;
 using Domain.Entities;
@@ -43,7 +37,7 @@ namespace Template.Controllers
                 if (response == null)
                     return NotFound(); // 404 si no se encuentra
 
-                return Ok(response); // 200 con el objeto
+                return StatusCode(200, response); // 200 con el objeto
             }
             catch (Exception ex)
             {

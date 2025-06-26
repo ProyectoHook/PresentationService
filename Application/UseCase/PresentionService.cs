@@ -3,11 +3,6 @@ using Application.Interfaces.Querys;
 using Application.Request;
 using Application.Response;
 using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Application.Interfaces.Services;
 
 namespace Application.UseCase
@@ -34,6 +29,7 @@ namespace Application.UseCase
             if (presentation == null)
                 return null;
 
+           
             PresentationResponse response = new PresentationResponse
             {
                 title = presentation.Title,
@@ -50,6 +46,8 @@ namespace Application.UseCase
                     CreateAt = slide.CreateAt,
                     ModifiedAt = slide.ModifiedAt,
                     Position = slide.Position,
+                    IdContentType = slide.IdContentType,
+                    Content = slide.Content,
                     Ask = slide.Ask == null ? null : new askResponseDto
                     {
                         Name = slide.Ask.Name,
@@ -67,6 +65,7 @@ namespace Application.UseCase
                             ModifiedAt = option.ModifiedAt
                         }).ToList()
                     }
+                    
                 }).ToList()
             };
 

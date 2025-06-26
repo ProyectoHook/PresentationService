@@ -16,7 +16,7 @@ namespace Domain.Entities
         // Relación 1:N: muchas opciones
         public ICollection<Option> Options { get; set; } = new List<Option>();
 
-        public int SlideId { get; set; }
+        public int IdSlide { get; set; }
         public Slide Slide { get; set; }
 
         public DateTime? ModifiedAt { get; set; }
