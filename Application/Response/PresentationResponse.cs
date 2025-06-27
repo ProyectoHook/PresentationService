@@ -13,6 +13,7 @@ namespace Application.Response
     // It contains properties that are necessary for the creation or update of a presentation.
     public class PresentationResponse
     {
+        public int id { get; set; }
         public string title { get; set; }
         public bool activityStatus { get; set; }
         public DateTime? modifiedAt { get; set; }

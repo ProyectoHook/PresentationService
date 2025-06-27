@@ -89,6 +89,7 @@ namespace Application.UseCase
 
             PresentationResponse presentationResponse = new PresentationResponse
             {
+                id = _presentation.IdPresentation,
                 title = _presentation.Title,
                 activityStatus = _presentation.ActivityStatus,
                 createdAt = _presentation.CreatedAt,
@@ -115,6 +116,7 @@ namespace Application.UseCase
 
             return new PresentationResponse
             {
+                id= presentation.IdPresentation,
                 title = presentation.Title,
                 activityStatus = presentation.ActivityStatus,
                 modifiedAt = (DateTime)presentation.ModifiedAt,
