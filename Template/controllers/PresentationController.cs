@@ -3,6 +3,7 @@ using Application.Request;
 using Application.Response;
 using Domain.Entities;
 using Application.Interfaces.Services;
+using Application.UseCase;
 
 namespace Template.Controllers
 {

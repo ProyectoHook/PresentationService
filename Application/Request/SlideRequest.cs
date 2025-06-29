@@ -10,6 +10,8 @@ namespace Application.Request
     {
         public int IdPresentation { get; set; }
         public string Title { get; set; }
+        public string Content { get; set; }
+        public int IdContentType { get; set; }
         public int Position { get; set; }
         public string BackgroundColor { get; set; }
         public int? IdAsk { get; set; }
