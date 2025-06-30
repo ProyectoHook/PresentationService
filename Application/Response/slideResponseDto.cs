@@ -19,5 +19,10 @@ namespace Application.Response
         public int Position { get; set; }
         public int IdContentType { get; set; }
         public askResponseDto? Ask { get; set; }
+
+        //Se agregan para SlideResponse con slideResponseDto en todos los casos
+        public int? IdAsk { get; set; }
+        public int IdPresentation { get; set; }
+
     }
 }

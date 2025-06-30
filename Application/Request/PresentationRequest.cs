@@ -17,6 +17,7 @@ namespace Application.Request
         public string title { get; set; }
         public bool activityStatus { get; set; }
         public Guid idUserCreat { get; set; }
+        public List<SlideRequest> slides { get; set; }
 
     }
 }

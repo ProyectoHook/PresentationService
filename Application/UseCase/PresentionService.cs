@@ -11,10 +11,12 @@ namespace Application.UseCase
     {
         private readonly IPresentationQuery _presentationQuery;
         private readonly IPresentationCommands _presentationCommand;
-        public PresentationService(IPresentationQuery presentationQuery, IPresentationCommands presentationCommand)
+        private readonly ISlideService _slideService;
+        public PresentationService(IPresentationQuery presentationQuery, IPresentationCommands presentationCommand, ISlideService slideService)
         {
             _presentationQuery = presentationQuery;
             _presentationCommand = presentationCommand;
+            _slideService = slideService;
         }
         public async Task<IEnumerable<Presentation>> GetAllPresentations()
         {
@@ -87,13 +89,23 @@ namespace Application.UseCase
 
             await _presentationCommand.InsertPresentation(_presentation);
 
+            List<slideResponseDto> slidesList = new List<slideResponseDto>();
+
+            foreach (SlideRequest slide in request.slides)
+            {
+                slide.IdPresentation = _presentation.IdPresentation;
+                slideResponseDto slideResponseDto = await _slideService.CreateAsync(slide);  
+                slidesList.Add(slideResponseDto);
+            }
+
             PresentationResponse presentationResponse = new PresentationResponse
             {
                 id = _presentation.IdPresentation,
                 title = _presentation.Title,
                 activityStatus = _presentation.ActivityStatus,
                 createdAt = _presentation.CreatedAt,
-                idUserCreat = _presentation.IdUserCreat
+                idUserCreat = _presentation.IdUserCreat,
+                slides = slidesList
             };
 
 
