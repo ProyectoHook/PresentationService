@@ -1,3 +1,5 @@
+--PRESENTACIONES PRECARGADAS
+
 -- Variables para Presentations
 DECLARE @PresentationId1 INT, @PresentationId2 INT, @PresentationId3 INT, @PresentationId4 INT, @PresentationId5 INT;
 
