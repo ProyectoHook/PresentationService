@@ -20,14 +20,14 @@ namespace Infrastructure.Commands
 
         public async Task<Option> InsertOption(Option option)
         {
-            await _context.options.AddAsync(option);
+            await _context.Options.AddAsync(option);
             await _context.SaveChangesAsync();
             return option;
         }
 
         public async Task UpdateOption(Option option)
         {
-            _context.options.Update(option);
+            _context.Options.Update(option);
             await _context.SaveChangesAsync();
         }
     }

@@ -20,14 +20,14 @@ namespace Infrastructure.Commands
 
         public async Task<Ask> InsertAsk(Ask ask)
         {
-            await _context.asks.AddAsync(ask);
+            await _context.Asks.AddAsync(ask);
             await _context.SaveChangesAsync();
             return ask;
         }
 
         public async Task UpdateAsk(Ask ask)
         {
-            _context.asks.Update(ask);
+            _context.Asks.Update(ask);
             await _context.SaveChangesAsync();
         }
     }

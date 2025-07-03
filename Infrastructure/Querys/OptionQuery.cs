@@ -21,12 +21,12 @@ namespace Infrastructure.Querys
 
         public async Task<IEnumerable<Option>> GetAllOptions()
         {
-            return await _context.options.ToListAsync();
+            return await _context.Options.ToListAsync();
         }
 
         public async Task<Option> GetOption(int id)
         {
-            return await _context.options.FirstOrDefaultAsync(o => o.IdOption == id);
+            return await _context.Options.FirstOrDefaultAsync(o => o.IdOption == id);
         }
     }
 }

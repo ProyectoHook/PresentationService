@@ -48,10 +48,9 @@ namespace Application.UseCase
                     CreateAt = slide.CreateAt,
                     ModifiedAt = slide.ModifiedAt,
                     Position = slide.Position,
-                    IdContentType = slide.IdContentType,
-                    Content = slide.Content,
                     Ask = slide.Ask == null ? null : new askResponseDto
                     {
+                        IdAsk= slide.Ask.IdAsk,
                         Name = slide.Ask.Name,
                         Description = slide.Ask.Description,
                         AskText = slide.Ask.AskText,

@@ -21,8 +21,13 @@ namespace Infrastructure.Querys
 
         public async Task<IEnumerable<Presentation>> GetAllPresentations()
         {
-            return await _context.Presentations.ToListAsync();
+            return await _context.Presentations
+                .Include(p => p.Slides)
+                    .ThenInclude(s => s.Ask)
+                        .ThenInclude(a => a.Options)
+                .ToListAsync();
         }
+
 
         public async Task<Presentation> GetPresentation(int id)
         {

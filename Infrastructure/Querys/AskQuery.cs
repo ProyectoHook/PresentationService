@@ -21,12 +21,12 @@ namespace Infrastructure.Querys
 
         public async Task<IEnumerable<Ask>> GetAllAsks()
         {
-            return await _context.asks.ToListAsync();
+            return await _context.Asks.ToListAsync();
         }
 
         public async Task<Ask> GetAsk(int id)
         {
-            var ask = await _context.asks.FindAsync(id);
+            var ask = await _context.Asks.FindAsync(id);
 
             return ask;
 
