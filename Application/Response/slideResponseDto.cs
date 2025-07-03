@@ -17,7 +17,6 @@ namespace Application.Response
         public DateTime CreateAt { get; set; }
         public DateTime? ModifiedAt { get; set; }
         public int Position { get; set; }
-        public int IdContentType { get; set; }
         public askResponseDto? Ask { get; set; }
 
         //Se agregan para SlideResponse con slideResponseDto en todos los casos

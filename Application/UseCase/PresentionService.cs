@@ -81,21 +81,55 @@ namespace Application.UseCase
             Presentation _presentation = new Presentation
             {
                 Title = request.title,
-                ActivityStatus = request.activityStatus,
+                ActivityStatus = true,
                 CreatedAt = DateTime.Now,
                 IdUserCreat = request.idUserCreat
             };
 
-            await _presentationCommand.InsertPresentation(_presentation);
+            var _slides = new List<Slide>();
 
-            List<slideResponseDto> slidesList = new List<slideResponseDto>();
-
-            foreach (SlideRequest slide in request.slides)
+            
+            foreach (var slide in request.slides)
             {
-                slide.IdPresentation = _presentation.IdPresentation;
-                slideResponseDto slideResponseDto = await _slideService.CreateAsync(slide);  
-                slidesList.Add(slideResponseDto);
+                var options = new List<Option>();
+
+                if (slide.Ask != null) 
+                {
+                    foreach (var option in slide.Ask.Options) 
+                    {
+                        var tempOption = new Option()
+                        { 
+                            OptionText = option.OptionText,
+                            IsCorrect = option.IsCorrect,
+                            CreatedAt = DateTime.Now
+                        };
+                        options.Add(tempOption);
+                    }
+                }
+
+                var temp = new Slide()
+                {
+                    Url = slide.url,
+                    BackgroundColor = slide.BackgroundColor,
+                    Presentation = _presentation,
+                    Title = slide.Title,
+                    CreateAt = DateTime.Now,
+                    Position = slide.Position,
+                    Ask = slide.Ask == null ? null : new Ask() 
+                    {
+                        Name = slide.Ask.Name,
+                        Description = slide.Ask.Description,
+                        AskText = slide.Ask.AskText,
+                        Options = options
+                    },
+                };
+
+                _slides.Add(temp);
             }
+
+            _presentation.Slides = _slides;
+
+            await _presentationCommand.InsertPresentation(_presentation);
 
             PresentationResponse presentationResponse = new PresentationResponse
             {
@@ -103,8 +137,7 @@ namespace Application.UseCase
                 title = _presentation.Title,
                 activityStatus = _presentation.ActivityStatus,
                 createdAt = _presentation.CreatedAt,
-                idUserCreat = _presentation.IdUserCreat,
-                slides = slidesList
+                idUserCreat = _presentation.IdUserCreat
             };
 
 

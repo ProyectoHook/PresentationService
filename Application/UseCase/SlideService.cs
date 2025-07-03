@@ -93,7 +93,6 @@ namespace Application.UseCase
                 Title = request.Title,
                 Position = request.Position,
                 BackgroundColor = request.BackgroundColor,
-                IdAsk = request.IdAsk,
                 Url = request.url,
                 CreateAt = slide.CreateAt,
                 ModifiedAt = DateTime.Now
