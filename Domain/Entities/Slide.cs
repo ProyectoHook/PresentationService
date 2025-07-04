@@ -10,6 +10,7 @@ namespace Domain.Entities
    public class Slide
     {
         public int IdSlide { get; set; }
+        public string Content { get; set; }
         public string? Url { get; set; }
         public string BackgroundColor { get; set; }
         public int IdPresentation { get; set; }

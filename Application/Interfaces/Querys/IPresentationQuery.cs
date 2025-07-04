@@ -8,7 +8,7 @@ namespace Application.Interfaces.Querys
 
     public interface IPresentationQuery
     {
-        Task<IEnumerable<Presentation>> GetAllPresentations();
+        Task<List<Presentation>> GetAllPresentations();
         Task<Presentation> GetPresentation(int id);
     }
 }

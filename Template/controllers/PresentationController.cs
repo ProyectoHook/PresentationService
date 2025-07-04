@@ -20,9 +20,20 @@ namespace Template.Controllers
         }
 
         [HttpGet("GetAll")]
-        public async Task<IEnumerable<Presentation>> GetPresentations()
+        [ProducesResponseType(typeof(List<PresentationResponse>),200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> GetPresentations()
         {
-            return await _presentationService.GetAllPresentations();
+            try
+            {
+                var response = await _presentationService.GetAllPresentations();
+                                
+                return StatusCode(200, response); // 200 con el objeto
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = ex.Message });
+            }
         }
 
         [HttpGet("GetById/{id}")]

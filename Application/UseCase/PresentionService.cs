@@ -18,15 +18,68 @@ namespace Application.UseCase
             _presentationCommand = presentationCommand;
             _slideService = slideService;
         }
-        public async Task<IEnumerable<Presentation>> GetAllPresentations()
+        public async Task<List<PresentationResponse>> GetAllPresentations()
         {
-            return await _presentationQuery.GetAllPresentations();
+            // Trae todas las presentaciones desde la capa de consultas
+            List<Presentation> presentations = await _presentationQuery.GetAllPresentations();
+
+            // Si no hay resultados devolvemos una lista vacía (evita null?checks posteriores)
+            if (presentations == null || presentations.Count == 0)
+                return new List<PresentationResponse>();
+
+            // Proyección 1?a?1 ? PresentationResponse
+            List<PresentationResponse> response = presentations.Select(p => new PresentationResponse
+            {
+                id = p.IdPresentation,
+                title = p.Title,
+                activityStatus = p.ActivityStatus,
+                modifiedAt = p.ModifiedAt,
+                createdAt = p.CreatedAt,
+                idUserCreat = p.IdUserCreat,
+
+                slides = p.Slides?.Select(slide => new slideResponseDto
+                {
+                    IdSlide = slide.IdSlide,
+                    Url = slide.Url,
+                    BackgroundColor = slide.BackgroundColor,
+                    Title = slide.Title,
+                    Content = slide.Content,
+                    CreateAt = slide.CreateAt,
+                    ModifiedAt = slide.ModifiedAt,
+                    Position = slide.Position,
+                    IdPresentation = p.IdPresentation,
+                    Ask = slide.Ask == null ? null : new askResponseDto
+                    {
+                        IdAsk = slide.Ask.IdAsk,
+                        Name = slide.Ask.Name,
+                        Description = slide.Ask.Description,
+                        AskText = slide.Ask.AskText,
+                        CreatedAt = slide.Ask.CreatedAt,
+                        ModifiedAt = slide.Ask.ModifiedAt,
+
+                        Options = slide.Ask.Options?.Select(option => new optionResponseDto
+                        {
+                            IdOption = option.IdOption,
+                            OptionText = option.OptionText,
+                            IsCorrect = option.IsCorrect,
+                            IdAsk = option.IdAsk,
+                            CreatedAt = option.CreatedAt,
+                            ModifiedAt = option.ModifiedAt
+                        }).ToList()
+                    }
+                }).ToList()
+            }).ToList();
+
+            return response;
         }
+
 
 
         public async Task<PresentationResponse> GetPresentation(int id)
         {
             Presentation presentation = await _presentationQuery.GetPresentation(id);
+
+            
 
             if (presentation == null)
                 return null;
@@ -45,6 +98,7 @@ namespace Application.UseCase
                     Url = slide.Url,
                     BackgroundColor = slide.BackgroundColor,
                     Title = slide.Title,
+                    Content = slide.Content,
                     CreateAt = slide.CreateAt,
                     ModifiedAt = slide.ModifiedAt,
                     Position = slide.Position,
@@ -113,9 +167,10 @@ namespace Application.UseCase
                     BackgroundColor = slide.BackgroundColor,
                     Presentation = _presentation,
                     Title = slide.Title,
+                    Content = slide.Content,
                     CreateAt = DateTime.Now,
                     Position = slide.Position,
-                    Ask = slide.Ask == null ? null : new Ask() 
+                    Ask = slide.Ask == null ? null : new Ask()
                     {
                         Name = slide.Ask.Name,
                         Description = slide.Ask.Description,

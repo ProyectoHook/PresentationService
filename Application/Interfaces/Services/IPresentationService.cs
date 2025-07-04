@@ -13,7 +13,7 @@ namespace Application.Interfaces.Services
     {
         Task<PresentationResponse> CreatePresentation(PresentationRequest request);
         Task<PresentationResponse> GetPresentation(int id);
-        Task<IEnumerable<Presentation>> GetAllPresentations();
+        Task<List<PresentationResponse>> GetAllPresentations();
         Task<PresentationResponse> UpdatePresentation(int id, PresentationRequest request);
 
     }

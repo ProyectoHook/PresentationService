@@ -19,7 +19,7 @@ namespace Infrastructure.Querys
             _context = serviceContext;
         }
 
-        public async Task<IEnumerable<Presentation>> GetAllPresentations()
+        public async Task<List<Presentation>> GetAllPresentations()
         {
             return await _context.Presentations
                 .Include(p => p.Slides)
