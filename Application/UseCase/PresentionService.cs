@@ -1,4 +1,4 @@
-using Application.Interfaces.Commands;
+﻿using Application.Interfaces.Commands;
 using Application.Interfaces.Querys;
 using Application.Request;
 using Application.Response;
@@ -23,11 +23,11 @@ namespace Application.UseCase
             // Trae todas las presentaciones desde la capa de consultas
             List<Presentation> presentations = await _presentationQuery.GetAllPresentations();
 
-            // Si no hay resultados devolvemos una lista vac�a (evita null?checks posteriores)
+            // Si no hay resultados devolvemos una lista vacía (evita null?checks posteriores)
             if (presentations == null || presentations.Count == 0)
                 return new List<PresentationResponse>();
 
-            // Proyecci�n 1?a?1 ? PresentationResponse
+            // Proyección 1?a?1 ? PresentationResponse
             List<PresentationResponse> response = presentations.Select(p => new PresentationResponse
             {
                 id = p.IdPresentation,
@@ -79,14 +79,13 @@ namespace Application.UseCase
         {
             Presentation presentation = await _presentationQuery.GetPresentation(id);
 
-            
-
             if (presentation == null)
-                return null;
+                return new PresentationResponse(); ;
 
            
             PresentationResponse response = new PresentationResponse
             {
+                id = presentation.IdPresentation,
                 title = presentation.Title,
                 activityStatus = presentation.ActivityStatus,
                 modifiedAt = presentation.ModifiedAt,
@@ -198,31 +197,95 @@ namespace Application.UseCase
 
             return presentationResponse;
         }
-        public async Task<PresentationResponse> UpdatePresentation(int id, PresentationRequest request)
+
+        public async Task<List<PresentationResponse>> GetPresentationsByUserId(Guid userId)
+        {
+            var presentations = await _presentationQuery.GetPresentationsByUserId(userId);
+
+            if (presentations == null || presentations.Count == 0)
+                return new List<PresentationResponse>();
+
+            //FILTRO PARA LAS PRESENTACIONES ACTIVAS
+            presentations = presentations.Where(p => p.ActivityStatus == true).ToList();
+
+            // ProyecciÃ³n 1?a?1 ? PresentationResponse
+            List<PresentationResponse> response = presentations.Select(p => new PresentationResponse
+            {
+                id = p.IdPresentation,
+                title = p.Title,
+                activityStatus = p.ActivityStatus,
+                modifiedAt = p.ModifiedAt,
+                createdAt = p.CreatedAt,
+                idUserCreat = p.IdUserCreat,
+
+                slides = p.Slides?.Select(slide => new slideResponseDto
+                {
+                    IdSlide = slide.IdSlide,
+                    Url = slide.Url,
+                    BackgroundColor = slide.BackgroundColor,
+                    Title = slide.Title,
+                    Content = slide.Content,
+                    CreateAt = slide.CreateAt,
+                    ModifiedAt = slide.ModifiedAt,
+                    Position = slide.Position,
+                    IdPresentation = p.IdPresentation,
+                    Ask = slide.Ask == null ? null : new askResponseDto
+                    {
+                        IdAsk = slide.Ask.IdAsk,
+                        Name = slide.Ask.Name,
+                        Description = slide.Ask.Description,
+                        AskText = slide.Ask.AskText,
+                        CreatedAt = slide.Ask.CreatedAt,
+                        ModifiedAt = slide.Ask.ModifiedAt,
+
+                        Options = slide.Ask.Options?.Select(option => new optionResponseDto
+                        {
+                            IdOption = option.IdOption,
+                            OptionText = option.OptionText,
+                            IsCorrect = option.IsCorrect,
+                            IdAsk = option.IdAsk,
+                            CreatedAt = option.CreatedAt,
+                            ModifiedAt = option.ModifiedAt
+                        }).ToList()
+                    }
+                }).ToList()
+            }).ToList();
+
+            return response;
+        }
+
+        public async Task<PresentationResponse> UpdatePresentation(int id, UpdatePresentationRequest request)
         {
             var presentation = await _presentationQuery.GetPresentation(id);
 
             if (presentation == null)
-            {
                 throw new Exception("Presentation not found");
-            }
 
-            presentation.Title = request.title;
-            presentation.ActivityStatus = request.activityStatus;
-            presentation.ModifiedAt = DateTime.Now;
+            presentation.ActivityStatus = false;
 
             await _presentationCommand.UpdatePresentation(presentation);
 
-            return new PresentationResponse
+            var newPresentation = new PresentationRequest()
             {
-                id= presentation.IdPresentation,
-                title = presentation.Title,
-                activityStatus = presentation.ActivityStatus,
-                modifiedAt = (DateTime)presentation.ModifiedAt,
-                createdAt = presentation.CreatedAt,
-                idUserCreat = presentation.IdUserCreat
+                title = request.title,
+                activityStatus = true,
+                idUserCreat = presentation.IdUserCreat,
+                slides = request.slides
             };
+
+            return await CreatePresentation(newPresentation);
+
         }
 
+        public async Task delete(int id)
+        {
+            var presentation = await _presentationQuery.GetPresentation(id);
+
+            if (presentation == null) { throw new Exception("Presentación no encontrada"); }
+
+            presentation.ActivityStatus = false;
+
+            await _presentationCommand.UpdatePresentation(presentation);
+        }
     }
 }

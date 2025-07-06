@@ -38,6 +38,15 @@ namespace Infrastructure.Querys
                 .FirstOrDefaultAsync(p => p.IdPresentation == id);
         }
 
+        public async Task<List<Presentation>> GetPresentationsByUserId(Guid userId)
+        {
+            return await _context.Presentations
+                .Include(p => p.Slides)
+                    .ThenInclude(s => s.Ask)
+                        .ThenInclude(a => a.Options)
+                .Where(p => p.IdUserCreat == userId)
+                .ToListAsync();
+        }
 
     }
 }

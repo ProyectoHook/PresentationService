@@ -10,5 +10,6 @@ namespace Application.Interfaces.Querys
     {
         Task<List<Presentation>> GetAllPresentations();
         Task<Presentation> GetPresentation(int id);
+        Task<List<Presentation>> GetPresentationsByUserId(Guid userId);
     }
 }
