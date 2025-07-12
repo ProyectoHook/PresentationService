@@ -1,9 +1,10 @@
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Application.Interfaces.Commands;
 using Application.UseCase;
 using Domain.Entities;
 using Infrastructure.Persistence;
- 
+using Microsoft.EntityFrameworkCore;
+
 
 namespace Infrastructure.Commands
 {
@@ -25,8 +26,8 @@ namespace Infrastructure.Commands
         }
         public async Task UpdatePresentation(Presentation presentation)
         {
-            _context.Presentations.Update(presentation);
-            await _context.SaveChangesAsync();
+            _context.Update(presentation);
+            _context.SaveChanges();
         }
 
     }

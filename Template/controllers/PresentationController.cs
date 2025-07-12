@@ -1,14 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Application.UseCase;
 using Application.Request;
 using Application.Response;
 using Domain.Entities;
 using Application.Interfaces.Services;
+using Application.UseCase;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Template.Controllers
 {
@@ -25,16 +21,43 @@ namespace Template.Controllers
         }
 
         [HttpGet("GetAll")]
-        public async Task<IEnumerable<Presentation>> GetPresentations()
+        [ProducesResponseType(typeof(List<PresentationResponse>),200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> GetPresentations()
         {
-            return await _presentationService.GetAllPresentations();
+            try
+            {
+                var response = await _presentationService.GetAllPresentations();
+                                
+                return StatusCode(200, response); // 200 con el objeto
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = ex.Message });
+            }
         }
 
         [HttpGet("GetById/{id}")]
-        public async Task<PresentationResponse> GetPresentation(int id)
+        [ProducesResponseType(typeof(PresentationResponse), 200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> GetPresentation(int id)
         {
-            return await _presentationService.GetPresentation(id);
+            try
+            {
+                var response = await _presentationService.GetPresentation(id);
+
+                if (response == null)
+                    return NotFound(); // 404 si no se encuentra
+
+                return StatusCode(200, response); // 200 con el objeto
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = ex.Message }); 
+            }
         }
+
 
         [HttpPost("create")]
         [ProducesResponseType(typeof(PresentationResponse), 201)]
@@ -52,19 +75,53 @@ namespace Template.Controllers
 
         }
 
-        [HttpPut("update/{id}")]
-        [ProducesResponseType(typeof(PresentationResponse), 200)]
-        [ProducesResponseType(404)]
-        public async Task<IActionResult> UpdatePresentation(int id, [FromBody] PresentationRequest request)
+
+        [HttpDelete("delete/{id}")]
+        [ProducesResponseType(typeof(Ok), 200)]
+        public async Task<IActionResult> CreatePresentation(int id)
         {
             try
             {
-                var updatedPresentation = await _presentationService.UpdatePresentation(id, request);
+                await _presentationService.delete(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+
+        }
+
+        [HttpPut("update/{id}")]
+        [ProducesResponseType(typeof(PresentationResponse), 200)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> UpdatePresentation(int id, [FromBody] UpdatePresentationRequest request)
+        {
+            try
+            {
+                var updatedPresentation = await _presentationService.UpdatePresentation(id,request);
                 return Ok(updatedPresentation);
             }
             catch (Exception ex)
             {
                 return NotFound(new { message = ex.Message });
+            }
+        }
+
+        [HttpGet("GetUserPresentations/{userId}")]
+        [ProducesResponseType(typeof(List<PresentationResponse>), 200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> GetPresentationsByUser(Guid userId)
+        {
+            try
+            {
+                var response = await _presentationService.GetPresentationsByUserId(userId);
+
+                return StatusCode(200, response); // 200 con el objeto
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = ex.Message });
             }
         }
 

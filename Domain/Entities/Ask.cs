@@ -12,12 +12,15 @@ namespace Domain.Entities
         public string Name { get; set; }
         public string Description { get; set; }
         public string AskText { get; set; }
-        public string Answer { get; set; }
+
+        // Relación 1:N: muchas opciones
+        public ICollection<Option> Options { get; set; } = new List<Option>();
+
+        public int IdSlide { get; set; }
+        public Slide Slide { get; set; }
+
         public DateTime? ModifiedAt { get; set; }
         public DateTime CreatedAt { get; set; }
-        
-
-        public ICollection<Option> options { get; set; }
-
     }
+
 }

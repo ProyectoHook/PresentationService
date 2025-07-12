@@ -30,6 +30,7 @@ namespace Template.Controllers
             return await _askService.GetAsk(id);
         }
 
+        /*
         [HttpPost("create")]
         [ProducesResponseType(typeof(AskResponse), 201)]
         public async Task<IActionResult> CreateAsk([FromBody] AskRequest request)
@@ -44,7 +45,7 @@ namespace Template.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
-
+        */
         [HttpPut("update/{id}")]
         [ProducesResponseType(typeof(AskResponse), 200)]
         [ProducesResponseType(404)]

@@ -38,19 +38,48 @@ builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ServiceContext>(options => options.UseSqlServer(connectionString));
 
+
+// Configuración de CORS
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.WithOrigins("http://localhost:5500",
+                              "http://127.0.0.1:5500",
+                              "http://127.0.0.1:5501",
+                              "https://127.0.0.1:5500",
+                              "http://127.0.0.1:3000",
+                              "https://slidex-front-end.vercel.app")
+                                .AllowAnyHeader()
+                                .AllowAnyMethod()
+                                .AllowCredentials(); // Si usás credenciales
+                      });
+});
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
+
+// Routing antes de auth
+app.UseRouting();
+
+// CORS antes de auth si se usan cookies
+app.UseCors(MyAllowSpecificOrigins);
+
+// Autenticación y autorización
+app.UseAuthentication();
 app.UseAuthorization();
 
+// Usar endpoints de controladores
 app.MapControllers();
 
 app.Run();

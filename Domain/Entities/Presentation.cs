@@ -14,7 +14,6 @@ namespace Domain.Entities
         public DateTime? ModifiedAt { get; set; }
         public DateTime CreatedAt { get; set; }
         public Guid IdUserCreat { get; set; }
-        
         public ICollection<Slide> Slides { get; set; }
 
 

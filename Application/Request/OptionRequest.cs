@@ -9,6 +9,6 @@ namespace Application.Request
     public class OptionRequest
     {
         public string OptionText { get; set; }
-        public int IdAsk { get; set; }
+        public bool IsCorrect { get; set; }
     }
 }

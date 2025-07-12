@@ -23,7 +23,7 @@ namespace Application.UseCase
             _slideQuery = slideQuery;
         }
 
-        public async Task<SlideResponse> CreateAsync(SlideRequest request)
+        public async Task<slideResponseDto> CreateAsync(SlideRequest request)
 
         {
             var _slide = new Slide
@@ -32,8 +32,7 @@ namespace Application.UseCase
                 Title = request.Title,
                 Position = request.Position,
                 BackgroundColor = request.BackgroundColor,
-                IdAsk = request.IdAsk,
-                IdContentType = request.IdContentType,
+                Url = request.url,
                 CreateAt = DateTime.Now,
                 ModifiedAt = DateTime.Now
                 };
@@ -41,7 +40,8 @@ namespace Application.UseCase
   
             await _slideCommand.InsertSlide(_slide);
 
-            SlideResponse slideResponde = new SlideResponse
+            //SlideResponse slideResponde = new SlideResponse
+            slideResponseDto slideResponde = new slideResponseDto
             {
                 IdSlide = _slide.IdSlide,
                 IdPresentation = _slide.IdPresentation,
@@ -50,14 +50,7 @@ namespace Application.UseCase
                 BackgroundColor = _slide.BackgroundColor,
                 CreateAt = DateTime.Now,
             };
-            if (_slide.IdAsk != null)
-            {
-                slideResponde.IdAsk = (int)_slide.IdAsk!;
-            }
-            if (_slide.IdContentType != null)
-            {
-                slideResponde.IdContentType = (int)_slide.IdContentType!;
-            }
+          
             return slideResponde;
         }
 
@@ -73,7 +66,9 @@ namespace Application.UseCase
             await _slideCommand.DeleteSlide(slide);
         }
 
-        public async Task<SlideResponse> UpdateSlide(int slideId, SlideRequest request)
+        
+        public async Task<slideResponseDto> UpdateSlide(int slideId, SlideRequest request)
+        //public async Task<SlideResponse> UpdateSlide(int slideId, SlideRequest request)
         {
             var slide = await _slideQuery.GetSlideId(slideId);
 
@@ -85,21 +80,20 @@ namespace Application.UseCase
             slide.Title = request.Title;
             slide.Position = request.Position;
             slide.BackgroundColor = request.BackgroundColor;
-            slide.IdAsk = request.IdAsk;
-            slide.IdContentType = request.IdContentType;
+            slide.Url = request.url;
             slide.ModifiedAt = DateTime.Now;
 
             await _slideCommand.UpdateSlide(slide);
 
-            SlideResponse slideResponde = new SlideResponse
+            //SlideResponse slideResponde = new SlideResponse
+            slideResponseDto slideResponde = new slideResponseDto
             {
                 IdSlide = slide.IdSlide,
                 IdPresentation = request.IdPresentation,
                 Title = request.Title,
                 Position = request.Position,
                 BackgroundColor = request.BackgroundColor,
-                IdAsk = request.IdAsk,
-                IdContentType = request.IdContentType,
+                Url = request.url,
                 CreateAt = slide.CreateAt,
                 ModifiedAt = DateTime.Now
             };

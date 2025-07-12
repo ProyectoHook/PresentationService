@@ -11,10 +11,12 @@ namespace Application.Interfaces.Services
 
     public interface IPresentationService
     {
+        Task<List<PresentationResponse>> GetPresentationsByUserId(Guid userId);
         Task<PresentationResponse> CreatePresentation(PresentationRequest request);
         Task<PresentationResponse> GetPresentation(int id);
-        Task<IEnumerable<Presentation>> GetAllPresentations();
-        Task<PresentationResponse> UpdatePresentation(int id, PresentationRequest request);
+        Task<List<PresentationResponse>> GetAllPresentations();
+        Task<PresentationResponse> UpdatePresentation(int id, UpdatePresentationRequest request);
+        Task delete(int id);
 
     }
 }

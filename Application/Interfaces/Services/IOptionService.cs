@@ -11,9 +11,8 @@ namespace Application.Interfaces.Services
 {
     public interface IOptionService
     {
-        Task<OptionResponse> CreateOption(OptionRequest request);
+       
         Task<Option> GetOption(int id);
         Task<IEnumerable<Option>> GetAllOptions();
-        Task<Option> UpdateOption(int id, OptionRequest request);
     }
 }

@@ -11,9 +11,12 @@ namespace Application.Interfaces.Services
 {
     public interface ISlideService
     {
-        Task<SlideResponse> CreateAsync(SlideRequest request);
+        Task<slideResponseDto> CreateAsync(SlideRequest request);
+        //Task<SlideResponse> CreateAsync(SlideRequest request);
+
         Task<Slide> GetSlideId(int slideId);
         void DeleteSlide(int slideId);
-        Task<SlideResponse> UpdateSlide(int slideId, SlideRequest request);
+        Task<slideResponseDto> UpdateSlide(int slideId, SlideRequest request);
+        //Task<SlideResponse> UpdateSlide(int slideId, SlideRequest request);
     }
 }

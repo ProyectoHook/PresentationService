@@ -13,7 +13,6 @@ namespace Application.Interfaces.Services
     {
         Task<IEnumerable<Ask>> GetAllAsks();
         Task<Ask> GetAsk(int id);
-        Task<AskResponse> CreateAsk(AskRequest request);
         Task<AskResponse> UpdateAsk(int id, AskRequest request);
     }
 }

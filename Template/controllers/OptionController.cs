@@ -34,6 +34,7 @@ namespace Template.controllers
             return await _optionService.GetOption(id);
         }
 
+        /*
         [HttpPost("create")]
         [ProducesResponseType(typeof(OptionResponse), 201)]
         public async Task<IActionResult> CreateOption([FromBody] OptionRequest request)
@@ -48,7 +49,9 @@ namespace Template.controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
+        */
 
+        /*
         [HttpPut("update/{id}")]
         [ProducesResponseType(typeof(OptionResponse), 200)]
         [ProducesResponseType(404)]
@@ -64,6 +67,7 @@ namespace Template.controllers
                 return NotFound(new { message = ex.Message });
             }
         }
+        */
 
     }
 }

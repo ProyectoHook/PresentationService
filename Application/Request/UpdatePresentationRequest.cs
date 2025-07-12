@@ -1,17 +1,13 @@
+﻿using Application.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Domain.Entities;
 
-namespace Application.Response
+namespace Application.Request
 {
-
-    // PresentationRequest class
-    // This class is used to represent a request for creating or updating a presentation.
-    // It contains properties that are necessary for the creation or update of a presentation.
-    public class PresentationResponse
+    public class UpdatePresentationRequest
     {
         public int id { get; set; }
         public string title { get; set; }
@@ -19,7 +15,6 @@ namespace Application.Response
         public DateTime? modifiedAt { get; set; }
         public DateTime createdAt { get; set; }
         public Guid idUserCreat { get; set; }
-        public List<slideResponseDto> slides { get; set; }
-
+        public List<SlideRequest> slides { get; set; }
     }
 }
